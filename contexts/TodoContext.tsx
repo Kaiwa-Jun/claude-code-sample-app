@@ -8,6 +8,8 @@ interface TodoContextType {
   todos: Todo[]
   addTodo: (title: string, description?: string) => void
   updateTodo: (id: string, updates: Partial<Pick<Todo, 'title' | 'description'>>) => void
+  updateTodoStatus: (id: string, status: Todo['status']) => void
+  deleteTodo: (id: string) => void
 }
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined)
@@ -35,8 +37,20 @@ export function TodoProvider({ children }: { children: ReactNode }) {
     ))
   }
 
+  const updateTodoStatus = (id: string, status: Todo['status']) => {
+    setTodos(todos.map(todo => 
+      todo.id === id 
+        ? { ...todo, status, updatedAt: new Date() }
+        : todo
+    ))
+  }
+
+  const deleteTodo = (id: string) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+
   return (
-    <TodoContext.Provider value={{ todos, addTodo, updateTodo }}>
+    <TodoContext.Provider value={{ todos, addTodo, updateTodo, updateTodoStatus, deleteTodo }}>
       {children}
     </TodoContext.Provider>
   )
