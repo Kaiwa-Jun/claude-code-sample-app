@@ -7,6 +7,7 @@ import { mockTodos } from '@/data/mockTodos'
 interface TodoContextType {
   todos: Todo[]
   addTodo: (title: string, description?: string) => void
+  updateTodo: (id: string, updates: Partial<Pick<Todo, 'title' | 'description'>>) => void
 }
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined)
@@ -26,8 +27,16 @@ export function TodoProvider({ children }: { children: ReactNode }) {
     setTodos([newTodo, ...todos])
   }
 
+  const updateTodo = (id: string, updates: Partial<Pick<Todo, 'title' | 'description'>>) => {
+    setTodos(todos.map(todo => 
+      todo.id === id 
+        ? { ...todo, ...updates, updatedAt: new Date() }
+        : todo
+    ))
+  }
+
   return (
-    <TodoContext.Provider value={{ todos, addTodo }}>
+    <TodoContext.Provider value={{ todos, addTodo, updateTodo }}>
       {children}
     </TodoContext.Provider>
   )
