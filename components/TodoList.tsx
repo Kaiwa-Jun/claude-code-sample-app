@@ -1,13 +1,10 @@
 'use client'
 
-import { Todo } from '@/types/todo'
 import TodoItem from './TodoItem'
+import { useTodos } from '@/contexts/TodoContext'
 
-interface TodoListProps {
-  todos: Todo[]
-}
-
-export default function TodoList({ todos }: TodoListProps) {
+export default function TodoList() {
+  const { todos } = useTodos()
   if (todos.length === 0) {
     return (
       <div className="text-center py-12">
