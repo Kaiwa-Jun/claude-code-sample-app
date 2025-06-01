@@ -22,6 +22,7 @@ claude-code-sample-app/
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page with TODO list
 ├── components/            # React components
+│   ├── ConfirmDialog.tsx  # Reusable confirmation dialog
 │   ├── TodoForm.tsx       # Form for creating new TODOs
 │   ├── TodoItem.tsx       # Individual TODO item display/edit
 │   └── TodoList.tsx       # TODO list container
@@ -74,6 +75,15 @@ npm run lint
    - Save/Cancel functionality
    - Validation to prevent empty titles
 
+4. **TODO Deletion** (#6)
+   - Delete TODO items with confirmation dialog
+   - Immediate removal from the list
+
+5. **TODO Status Management** (#7)
+   - Toggle between pending, in_progress, and completed states
+   - Visual status indicators with color coding
+   - Status updates with automatic timestamp
+
 ## Code Conventions
 
 - **Components**: Functional components with TypeScript interfaces
@@ -89,11 +99,16 @@ Currently, no automated tests are implemented. When adding tests:
 - Test component rendering and user interactions
 - Test Context API state management
 
+## Architecture Notes
+
+- **State Management**: Central TodoContext provides CRUD operations (addTodo, updateTodo, updateTodoStatus, deleteTodo) with automatic timestamp updates
+- **TypeScript Configuration**: Uses path mapping with "@/*" for clean imports
+- **Component Architecture**: Separation of concerns with dedicated components for forms, items, lists, and dialogs
+- **Data Flow**: Unidirectional data flow through React Context, all state mutations go through context methods
+
 ## Future Enhancements
 
-Planned features based on GitHub issues:
-- TODO deletion functionality (#6)
-- TODO status management (pending/in_progress/completed) (#7)
+Planned features:
 - Filtering and search capabilities (#8)
 - Backend API integration
 - Data persistence
